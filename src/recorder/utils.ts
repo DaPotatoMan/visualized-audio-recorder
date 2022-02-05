@@ -4,7 +4,10 @@ export function destroyStream(...streams: MediaStream[]): void {
 
   streams.forEach(stream => stream.getTracks().forEach((track) => {
     track.stop()
+    track.dispatchEvent(new Event('ended'))
+
     stream.removeTrack(track)
+    stream.dispatchEvent(new Event('removetrack'))
   }))
 }
 

@@ -57,7 +57,18 @@ export async function drawVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRende
     const data = new Uint8Array(analyser.frequencyBinCount)
       .slice(0, config.maxLines)
 
+    let isActive = true
+
+    // ? Stop rendering when stream is destroyed
+    stream.addEventListener('removetrack', () => {
+      console.info('Stopping canvas drawing')
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      isActive = false
+    })
+
     function render() {
+      if (!isActive) return
+
       requestAnimationFrame(render)
       analyser.getByteFrequencyData(data)
       renderVisualizer(canvas, ctx, data)

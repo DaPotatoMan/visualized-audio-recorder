@@ -33,20 +33,21 @@ export default class Recorder {
   }
 
   async init() {
+    this.destroy()
+
+    // ? Initialize streams
     const audio = await getStream(this.options?.constraints)
     const video = createVisualizer(audio, this.options.visualizerFps)
     const stream = muxStreams(audio, video)
 
-    // Amplify
+    // ? Amplify audio
     const destroyAmplifier = amplifyStream(stream, 7)
 
-    const recorder = new MediaRecorder(stream, this.options.recorder)
-    recorder.onstop = () => {
+    this.recorder = new MediaRecorder(stream, this.options.recorder)
+    this.recorder.addEventListener('stop', () => {
       destroyAmplifier()
       destroyStream(stream, audio, video)
-    }
-
-    this.recorder = recorder
+    })
   }
 
   start() {
@@ -54,9 +55,18 @@ export default class Recorder {
   }
 
   stop() {
+    if (this.recorder?.state === 'inactive') return
+
     return new Promise<Blob>((resolve) => {
       this.recorder?.addEventListener('dataavailable', event => resolve(event.data))
       this.recorder?.stop()
     })
+  }
+
+  destroy() {
+    if (this.recorder) {
+      this.recorder.stop()
+      this.recorder = undefined
+    }
   }
 }
