@@ -18,10 +18,10 @@
       "require": "./dist/index.js"
     }
   },
+  "sideEffects": false,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --https --host --port 4000",
     "build": "tsup src/index.ts --format esm,cjs,iife --dts --minify",
-    "prepublishOnly": "npm run build",
     "prepare": "npm run build"
   },
   "dependencies": {
@@ -36,9 +36,5 @@
     "vite": "^2.7.2",
     "vue": "^3.2.29",
     "vue-tsc": "^0.31.1"
-  },
-  "optionalDependencies": {
-    "@types/node": "^17.0.15",
-    "@types/offscreencanvas": "^2019.6.4"
   }
 }
