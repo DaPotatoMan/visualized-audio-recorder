@@ -21,6 +21,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsup src/index.ts --format esm,cjs,iife --dts --minify",
+    "prepublishOnly": "npm run build",
     "prepare": "npm run build"
   },
   "dependencies": {
@@ -33,8 +34,6 @@
     "tsup": "^5.11.13",
     "typescript": "^4.4.4",
     "vite": "^2.7.2",
-    "vite-dts": "^1.0.4",
-    "vite-plugin-dts": "^0.9.9",
     "vue": "^3.2.29",
     "vue-tsc": "^0.31.1"
   },
