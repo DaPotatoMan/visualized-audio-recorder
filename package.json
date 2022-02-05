@@ -14,8 +14,8 @@
   "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "import": "./dist/bundle.es.js",
-      "require": "./dist/bundle.umd.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
   },
   "scripts": {
