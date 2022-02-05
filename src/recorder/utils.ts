@@ -52,3 +52,7 @@ export function muxStreams(audio: MediaStream, video: MediaStream) {
   audio.getAudioTracks().forEach(i => video.addTrack(i))
   return video
 }
+
+export function setTrackHints(stream: MediaStream, hint: string) {
+  stream.getTracks().forEach(i => i.contentHint = hint)
+}

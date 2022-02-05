@@ -3,18 +3,18 @@ import smoothArray from 'array-smooth'
 
 const config = {
   lineCap: 'round',
+  gap: 5,
   lineWidth: 10,
   maxLines: 40,
-  bufferSize: 1024
+  bufferSize: 512
 }
 
 // Methods
 function renderVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, buffer: Uint8Array) {
   const data = smoothArray(buffer, 4)
 
-  const { lineCap, lineWidth } = config
+  const { gap, lineCap, lineWidth } = config
   const { width, height } = canvas
-  const gap = width / data.length
 
   Object.assign(ctx, { lineWidth, lineCap })
 
@@ -43,7 +43,13 @@ function renderVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext
 
 export async function drawVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, stream: MediaStream) {
   try {
-    // Create analyser
+    config.lineWidth = Math.round(canvas.width / 130)
+    config.gap = Math.round(canvas.width / (config.lineWidth * 2))
+    config.maxLines = Math.round(canvas.width / (config.gap - config.lineWidth))
+
+    console.log(config)
+
+    // ? Create analyser
     const context = new AudioContext()
     const analyser = context.createAnalyser()
     analyser.fftSize = config.bufferSize
