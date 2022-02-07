@@ -1,5 +1,5 @@
 import { createVisualizer } from '../visualizer'
-import { amplifyStream, destroyStream, getStream, muxStreams } from './utils'
+import { destroyStream, getStream, muxStreams } from './utils'
 
 export interface IRecorderOptions {
   constraints: Pick<MediaStreamConstraints, 'audio'>
@@ -41,11 +41,11 @@ export default class Recorder {
     const stream = muxStreams(audio, video)
 
     // ? Amplify audio
-    const destroyAmplifier = amplifyStream(stream, 7)
+    // const destroyAmplifier = amplifyStream(stream, 7)
 
     this.recorder = new MediaRecorder(stream, this.options.recorder)
     this.recorder.addEventListener('stop', () => {
-      destroyAmplifier()
+      // destroyAmplifier()
       destroyStream(stream, audio, video)
     })
   }
