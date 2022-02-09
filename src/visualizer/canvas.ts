@@ -1,5 +1,6 @@
 // @ts-expect-error type issue
 import smoothArray from 'array-smooth'
+import { destroyStream } from 'src/recorder/utils'
 
 const config = {
   lineCap: 'round',
@@ -47,8 +48,6 @@ export async function drawVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRende
     config.gap = Math.round(canvas.width / (config.lineWidth * 2))
     config.maxLines = Math.round(canvas.width / (config.gap - config.lineWidth))
 
-    console.log(config)
-
     // ? Create analyser
     const context = new AudioContext()
     const analyser = context.createAnalyser()
@@ -57,8 +56,9 @@ export async function drawVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRende
     analyser.maxDecibels = 20
     analyser.smoothingTimeConstant = 0.85
 
-    const audioSrc = context.createMediaStreamSource(stream)
-    audioSrc.connect(analyser)
+    const audio = stream.clone()
+    context.createMediaStreamSource(audio)
+      .connect(analyser)
 
     const data = new Uint8Array(analyser.frequencyBinCount)
       .slice(0, config.maxLines)
@@ -67,6 +67,8 @@ export async function drawVisualizer(canvas: HTMLCanvasElement, ctx: CanvasRende
 
     // ? Stop rendering when stream is destroyed
     stream.addEventListener('removetrack', () => {
+      destroyStream(audio)
+
       console.info('Stopping canvas drawing')
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       isActive = false
