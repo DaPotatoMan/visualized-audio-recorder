@@ -12,6 +12,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "dev": "vite --https --host --port 4000",
     "build": "tsup src/index.ts --format esm,cjs,iife --dts --minify",
