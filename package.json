@@ -1,0 +1,42 @@
+{
+  "name": "visualized-audio-recorder",
+  "version": "0.0.0",
+  "author": {
+    "name": "Fahadul Islam",
+    "email": "dev.iamfahad@gmail.com",
+    "url": "https://github.com/dapotatoman"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "tsup src/index.ts --watch",
+    "build": "tsup src/index.ts --format esm,cjs,iife --dts --minify",
+    "prepare": "npm run build",
+    "prepublishOnly": "pnpm build:docs & pnpm build",
+    "release": "bumpp --commit --push --tag && npm publish"
+  },
+  "dependencies": {
+    "array-smooth": "^1.0.0",
+    "media-utils": "^0.0.1-beta.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@antfu/eslint-config": "^0.18.9",
+    "bumpp": "^7.1.1",
+    "eslint": "^8.11.0",
+    "tsup": "^5.12.1",
+    "typescript": "^4.6.3"
+  }
+}

@@ -1,0 +1,29 @@
+name: Build and Deploy
+on: [push]
+
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: latest
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'pnpm'
+
+      - name: Install and Build 🔧
+        run: |
+          pnpm recursive install --frozen-lockfile
+          cd src-gh-page
+          pnpm vite build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: src-gh-page/dist
