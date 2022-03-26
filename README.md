@@ -14,13 +14,13 @@ This package helps you create visualized audio recordings (outputs webm video).
 
 ## Usage
 
-1. Install plugin.
+1. Install package.
 
    ```bash
    npm add -D visualized-audio-recorder
    ```
 
-2. Add it to Vite config file.
+2. Add it to your project.
 
   ```ts
   import useRecorder from 'visualized-audio-recorder'
