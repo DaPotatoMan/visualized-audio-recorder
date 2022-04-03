@@ -9,7 +9,7 @@ import AutoIconsResolver from 'unplugin-icons/resolver'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'development' ? '/' : '/visualized-audio-recorder/',
+  // base: process.env.NODE_ENV === 'development' ? '/' : '/visualized-audio-recorder/',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`

@@ -22,23 +22,56 @@ This package helps you create visualized audio recordings (outputs webm video).
 
 2. Add it to your project.
 
-  ```ts
-  import useRecorder from 'visualized-audio-recorder'
+   ```ts
+   import useRecorder from 'visualized-audio-recorder'
 
-  const recorder = useRecorder()
+   const recorder = useRecorder()
 
-  // Start recording
-  await recorder.init()
-  recorder.start()
+   // Start recording
+   await recorder.init()
+   recorder.start()
 
-  // Stop recording
-  const blob = await recorder.stop()
+   // Stop recording
+   const blob = await recorder.stop()
 
-  // ⇋ Do stuff with blob
-  ```
+   // ⇋ Do stuff with blob
+   ```
 
 3. Profit 🎉
 
+
+## Configure recorder
+
+### Basic config
+```ts
+interface IRecorderOptions {
+  fps: number
+  quality: number
+  wrapper: Element
+  effect: IVisualEffect
+  streamConstraints: MediaStreamConstraints
+  recorderOptions: MediaRecorderOptions
+}
+```
+
+### Loading a visual effect
+ 
+```ts
+import visualEffect from 'visualized-audio-recorder/effects/linear-lines'
+
+useRecorder({
+  fps: 60,
+  quality: 720,
+
+  effect: visualEffect({
+    bgColor: '#fff',
+    barColor: '#000'
+  })
+})
+  ```
+You can also define your own custom visual effect. Learn how to create one [here](https://github.com/DaPotatoMan/visualized-audio-recorder/blob/main/docs/effect.md).
+Read more about the API [here](https://github.com/DaPotatoMan/visualized-audio-recorder/blob/main/docs/api.md).
+
 ## License
 
-[MIT License](./LICENSE) © 2022 [dapotatoman](https://github.com/dapotatoman)
+[MIT License](https://github.com/DaPotatoMan/visualized-audio-recorder/blob/main/LICENSE) © 2022 [dapotatoman](https://github.com/dapotatoman)

@@ -1,16 +1,27 @@
 <template>
+  <div ref="canvasRef" :class="$style.canvasWrapper" />
+
   <button :class="$style.button" @click="isRecording ? stop() : start()">
     <i-carbon-stop v-if="isRecording" />
     <i-carbon-microphone v-else />
   </button>
 
   <br>
-  <span>
-    Click button to {{ isRecording ? 'stop' : 'start' }} recording
-  </span>
+  <span>Click button to {{ isRecording ? 'stop' : 'start' }} recording</span>
 </template>
 
 <style lang="postcss" module>
+.canvasWrapper {
+  @apply w-720px max-w-full mb-10;
+  aspect-ratio: 16/9;
+
+  & > canvas {
+    @apply w-full h-full
+    border border-light-100/10
+    rounded-md shadow-md;
+  }
+}
+
 .button {
   @apply w-30 h-30 text-4xl
   flex items-center justify-center
@@ -27,12 +38,32 @@
 
 <script setup lang="ts">
 import useRecorder from '../../../src'
+import VisualEffect from '../../../src/effects/profile-linear-lines'
 
 const emit = defineEmits(['finish'])
+const canvasRef = ref<HTMLElement>()
 
 const isRecording = shallowRef(false)
 const recorder = useRecorder({
   fps: 60,
+  quality: 720,
+  get wrapper() {
+    return canvasRef.value!
+  },
+
+  effect: VisualEffect({
+    image: '/profile.jpg',
+    barWidth: 3,
+    barColor: 'rgb(0 0 0 / 40%)'
+  }),
+
+  streamConstraints: {
+    autoGainControl: true,
+    echoCancellation: true,
+    noiseSuppression: true,
+    suppressLocalAudioPlayback: true
+  },
+
   recorderOptions: {
     mimeType: 'video/webm;codecs=vp9,opus'
   }
