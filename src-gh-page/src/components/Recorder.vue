@@ -13,7 +13,6 @@
 <style lang="postcss" module>
 .canvasWrapper {
   @apply w-720px max-w-full mb-10;
-  aspect-ratio: 16/9;
 
   & > canvas {
     @apply w-full h-full
@@ -52,7 +51,7 @@ const recorder = useRecorder({
   },
 
   effect: VisualEffect({
-    image: '/profile.jpg',
+    image: '/visualized-audio-recorder/profile.jpg',
     barWidth: 3,
     barColor: 'rgb(0 0 0 / 40%)'
   }),
