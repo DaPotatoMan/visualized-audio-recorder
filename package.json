@@ -1,11 +1,24 @@
 {
   "name": "visualized-audio-recorder",
   "version": "0.0.3",
+  "license": "MIT",
+  "repository": "github:DaPotatoMan/visualized-audio-recorder",
   "author": {
     "name": "Fahadul Islam",
     "email": "dev.iamfahad@gmail.com",
     "url": "https://github.com/dapotatoman"
   },
+  "bugs": {
+    "url": "https://github.com/DaPotatoMan/visualized-audio-recorder/issues",
+    "email": "dev.iamfahad@gmail.com"
+  },
+  "keywords": [
+    "visual",
+    "visualizer",
+    "effect",
+    "recorder",
+    "audio"
+  ],
   "files": [
     "dist"
   ],
